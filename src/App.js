@@ -1,23 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
+import AudioPlayer from "./AudioPlayer";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Sveriges Radio Testkanal</h1>
+      <AudioPlayer src="https://strcl-cdn.sr.se/lc/p4plus" />
+
+
+
     </div>
   );
 }
