@@ -54,6 +54,7 @@ const AudioPlayer = ({ src }) => {
                     var activeFrag = hls.streamController.fragCurrent
 
                         console.log(`URL E ${frag.baseurl}`)
+                        console.log(`URL E ${frag.url}`)
                         console.log(`br ${hls.levels[frag.level].bitrate}`)
 
 
