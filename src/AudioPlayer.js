@@ -35,7 +35,7 @@ const AudioPlayer = ({ src }) => {
 
                     switch (data.details) {
                         case Hls.ErrorDetails.BUFFER_STALLED_ERROR:
-                            //console.log("BUFFER STALLED!")
+                            console.log("BUFFER STALLED!")
                         case Hls.ErrorDetails.BUFFER_NUDGE_ON_STALL:
                             //console.log("BuFFer Nudge on stall")
                             break;
@@ -50,12 +50,17 @@ const AudioPlayer = ({ src }) => {
 
                         setUrl(frag.sn + " " + frag.baseurl);
                         //console.log("TTFB: " + hls.ttfbEstimate.toFixed(3))
-                    var lastCurrentTime = hls.streamController.lastCurrentTime
-                    var activeFrag = hls.streamController.fragCurrent
+                    let lastCurrentTime = hls.streamController.lastCurrentTime
+                    let activeFrag = hls.streamController.fragCurrent
+
 
                         console.log(`URL E ${frag.baseurl}`)
-                        console.log(`URL E ${frag.url}`)
+                        console.log(`URL XHR E ${hls.cmcdController.starved}`)
                         console.log(`br ${hls.levels[frag.level].bitrate}`)
+                        console.log(`bl ${hls.cmcdController.getObjectType(activeFrag)}`)
+                        console.log(`Top Bandwidth ${hls.cmcdController.getTopBandwidth(activeFrag)}`)
+
+
 
 
 
