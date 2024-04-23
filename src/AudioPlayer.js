@@ -1,25 +1,31 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Hls from 'hls.js';
+import BitrateChart from './charts/BitrateChart'; // Assuming you've placed BitrateChart in a separate file
+import MtpChart from './charts/MtpChart'; // Assuming you've placed MtpChart in a separate file
+import TopBandwidthChart from './charts/TopBandwidthChart'; // New component for Top Bandwidth chart
+import parseManifestURL from './ManifestParser'; // Assuming you've placed the ManifestParser file in the same directory
 import { v4 as uuidv4 } from 'uuid';
 
 const AudioPlayer = ({ src }) => {
     const audioRef = useRef(null);
     const [url, setUrl] = useState("testURl");
+    const [bitrates, setBitrates] = useState([]);
+    const [mtps, setMtps] = useState([]);
+    const [topBandwidths, setTopBandwidths] = useState([]);
+
     useEffect(() => {
         const audio = audioRef.current;
         let hls;
 
         if (audio) {
             if (Hls.isSupported()) {
-                // Generate a unique session ID for CMCD
                 const sessionId = uuidv4();
                 hls = new Hls({
                     cmcd: {
-                        sessionId: sessionId, // Use the generated session ID
-                        contentId: 'your-content-id', // Replace with your actual content ID
+                        sessionId: sessionId,
+                        contentId: 'your-content-id',
                         useHeaders: false,
                     },
-                    //debug: true
                 });
                 hls.loadSource(src);
                 hls.attachMedia(audio);
@@ -27,42 +33,26 @@ const AudioPlayer = ({ src }) => {
                     audio.play();
                 });
 
-
                 hls.on(Hls.Events.ERROR, function (event, data) {
-                    var errorType = data.type;
-                    var errorDetails = data.details;
-                    var errorFatal = data.fatal;
-
-                    switch (data.details) {
-                        case Hls.ErrorDetails.BUFFER_STALLED_ERROR:
-                            //console.log("BUFFER STALLED!")
-                        case Hls.ErrorDetails.BUFFER_NUDGE_ON_STALL:
-                            //console.log("BuFFer Nudge on stall")
-                            break;
-                        default:
-                            break;
-                    }
+                    // Handle errors
                 });
 
                 hls.on(Hls.Events.FRAG_LOADING, (event, { frag }) => {
-                    //if (frag.type === 'main') {
-                        //console.log(`Loading fragment ${frag.sn} at quality level ${frag.level} , ${frag.url}`);
+                    const bitrate = hls.levels[frag.level].bitrate;
+                    setBitrates(prevBitrates => [...prevBitrates, bitrate]);
 
-                        setUrl(frag.sn + " " + frag.baseurl);
-                        //console.log("TTFB: " + hls.ttfbEstimate.toFixed(3))
-                    var lastCurrentTime = hls.streamController.lastCurrentTime
-                    var activeFrag = hls.streamController.fragCurrent
+                    // Set manifest URL
+                    setUrl(frag.baseurl);
 
-                        console.log(`URL E ${frag.baseurl}`)
-                        console.log(`URL E ${frag.url}`)
-                        console.log(`br ${hls.levels[frag.level].bitrate}`)
+                    // Parse manifest URL to extract MTP
+                    const mtpValue = parseManifestURL(frag.baseurl);
+                    setMtps(prevMtps => [...prevMtps, mtpValue]);
 
-
-
-                    //}
+                    // Get top bandwidth
+                    const activeFrag = hls.streamController.fragCurrent;
+                    const topBandwidth = hls.cmcdController.getTopBandwidth(activeFrag);
+                    setTopBandwidths(prevTopBandwidths => [...prevTopBandwidths, topBandwidth]);
                 });
-
-
             } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
                 audio.src = src;
                 audio.addEventListener('loadedmetadata', function () {
@@ -71,6 +61,7 @@ const AudioPlayer = ({ src }) => {
             }
         }
 
+        // Cleanup
         return () => {
             if (hls) {
                 hls.destroy();
@@ -81,9 +72,11 @@ const AudioPlayer = ({ src }) => {
     return (
         <div>
             <audio ref={audioRef} controls></audio>
-            <h3> {url} </h3>
+            <h3>Manifest URL: {url}</h3>
+            <BitrateChart bitrates={bitrates} />
+            <TopBandwidthChart topBandwidths={topBandwidths} />
+            <MtpChart mtps={mtps} />
         </div>
-
     );
 };
 
