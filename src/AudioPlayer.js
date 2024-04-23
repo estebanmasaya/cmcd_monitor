@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Hls from 'hls.js';
-import BitrateChart from './charts/BitrateChart'; // Assuming you've placed BitrateChart in a separate file
-import MtpChart from './charts/MtpChart'; // Assuming you've placed MtpChart in a separate file
-import TopBandwidthChart from './charts/TopBandwidthChart'; // New component for Top Bandwidth chart
-import parseManifestURL from './ManifestParser'; // Assuming you've placed the ManifestParser file in the same directory
+import BitrateChart from './charts/BitrateChart';
+import MtpChart from './charts/MtpChart';
+import TopBandwidthChart from './charts/TopBandwidthChart';
+import parseManifestURL from './ManifestParser';
+import BufferStallChart from './charts/BufferStallChart';
 import { v4 as uuidv4 } from 'uuid';
 
 const AudioPlayer = ({ src }) => {
@@ -12,6 +13,7 @@ const AudioPlayer = ({ src }) => {
     const [bitrates, setBitrates] = useState([]);
     const [mtps, setMtps] = useState([]);
     const [topBandwidths, setTopBandwidths] = useState([]);
+    const [bufferStalls, setBufferStalls] = useState([]);
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -34,7 +36,10 @@ const AudioPlayer = ({ src }) => {
                 });
 
                 hls.on(Hls.Events.ERROR, function (event, data) {
-                    // Handle errors
+                    if (data.details === Hls.ErrorDetails.BUFFER_STALLED_ERROR) {
+                        const stallTime = new Date().getTime();
+                        setBufferStalls(prevStalls => [...prevStalls, stallTime]);
+                    }
                 });
 
                 hls.on(Hls.Events.FRAG_LOADING, (event, { frag }) => {
@@ -76,6 +81,7 @@ const AudioPlayer = ({ src }) => {
             <BitrateChart bitrates={bitrates} />
             <TopBandwidthChart topBandwidths={topBandwidths} />
             <MtpChart mtps={mtps} />
+            <BufferStallChart bufferStalls={bufferStalls} />
         </div>
     );
 };

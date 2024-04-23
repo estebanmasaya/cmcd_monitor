@@ -13,7 +13,7 @@ const MtpChart = ({ mtps }) => {
             data: {
                 labels: mtps.map((_, index) => index + 1),
                 datasets: [{
-                    label: 'MTP',
+                    label: 'Measured Throughput (mtp)',
                     data: mtps,
                     borderColor: 'rgba(255, 99, 132, 1)',
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',

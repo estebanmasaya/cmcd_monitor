@@ -1,22 +1,25 @@
-// BitrateChart.js
+// BufferStallChart.js
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-const BitrateChart = ({ bitrates }) => {
+const BufferStallChart = ({ bufferStalls }) => {
     const chartRef = useRef(null);
 
     useEffect(() => {
+        // Extract timestamps from the buffer stalls array
+        const timestamps = bufferStalls.map(timestamp => new Date(timestamp).toLocaleTimeString());
+
         // Initialize chart
         const ctx = chartRef.current.getContext('2d');
         const chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: bitrates.map((_, index) => index + 1),
+                labels: timestamps,
                 datasets: [{
-                    label: 'Bitrate (br)',
-                    data: bitrates,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    label: 'Buffer Stalls',
+                    data: bufferStalls.map((_, index) => index + 1),
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 }],
             },
             options: {
@@ -34,11 +37,11 @@ const BitrateChart = ({ bitrates }) => {
             // Cleanup chart
             chart.destroy();
         };
-    }, [bitrates]);
+    }, [bufferStalls]);
 
     return (
-        <canvas ref={chartRef} style={{ maxWidth: '300px', maxHeight: '200px' }}></canvas>
+        <canvas ref={chartRef} style={{ maxWidth: '300px', maxHeight: '300px' }}></canvas>
     );
 };
 
-export default BitrateChart;
+export default BufferStallChart;

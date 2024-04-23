@@ -13,7 +13,7 @@ const TopBandwidthChart = ({ topBandwidths }) => {
             data: {
                 labels: topBandwidths.map((_, index) => index + 1),
                 datasets: [{
-                    label: 'Top Bandwidth',
+                    label: 'Top Bandwidth (tp)',
                     data: topBandwidths,
                     borderColor: 'rgba(54, 162, 235, 1)',
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
