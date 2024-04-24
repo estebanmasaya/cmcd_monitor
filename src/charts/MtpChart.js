@@ -37,7 +37,7 @@ const MtpChart = ({ mtps }) => {
     }, [mtps]);
 
     return (
-        <canvas ref={chartRef} style={{ maxWidth: '300px', maxHeight: '200px' }}></canvas>
+        <canvas ref={chartRef} style={{ maxWidth: '600px', maxHeight: '400px' }}></canvas>
     );
 };
 

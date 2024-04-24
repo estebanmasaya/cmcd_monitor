@@ -75,13 +75,25 @@ const AudioPlayer = ({ src }) => {
     }, [src]);
 
     return (
-        <div>
-            <audio ref={audioRef} controls></audio>
-            <h3>Manifest URL: {url}</h3>
-            <BitrateChart bitrates={bitrates} />
-            <TopBandwidthChart topBandwidths={topBandwidths} />
-            <MtpChart mtps={mtps} />
-            <BufferStallChart bufferStalls={bufferStalls} />
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <audio ref={audioRef} controls style={{ marginBottom: '20px' }}></audio>
+            <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>Manifest URL: {url}</h3>
+            <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '40px' }}>
+                <div style={{ flex: '1', marginRight: '10px' }}>
+                    <BitrateChart bitrates={bitrates} />
+                </div>
+                <div style={{ flex: '1', marginLeft: '10px' }}>
+                    <TopBandwidthChart topBandwidths={topBandwidths} />
+                </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                <div style={{ flex: '1', marginRight: '10px' }}>
+                    <MtpChart mtps={mtps} />
+                </div>
+                <div style={{ flex: '1', marginLeft: '10px' }}>
+                    <BufferStallChart bufferStalls={bufferStalls} />
+                </div>
+            </div>
         </div>
     );
 };
