@@ -5,7 +5,11 @@ import MtpChart from './charts/MtpChart';
 import TopBandwidthChart from './charts/TopBandwidthChart';
 import parseManifestURL from './ManifestParser';
 import BufferStallChart from './charts/BufferStallChart';
+import TTFBChart from './charts/TTFBChart';
 import { v4 as uuidv4 } from 'uuid';
+import BandwidthChart from './charts/BandwithChart';
+import TPandBRChart from './charts/TPandBRChart'
+
 
 const AudioPlayer = ({ src }) => {
     const audioRef = useRef(null);
@@ -14,6 +18,8 @@ const AudioPlayer = ({ src }) => {
     const [mtps, setMtps] = useState([]);
     const [topBandwidths, setTopBandwidths] = useState([]);
     const [bufferStalls, setBufferStalls] = useState([]);
+    const [ttfbValues, setTTFBValues] = useState([]);
+    const [bandwidthValues, setBandwidthValues] = useState([]);
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -51,7 +57,15 @@ const AudioPlayer = ({ src }) => {
                     console.log("TTFB: " + hls.ttfbEstimate.toFixed(3))
                     console.log("BANDWIDTH: " + hls.bandwidthEstimate)
 
-                    // Parse manifest URL to extract MTP
+                    // Bandwith
+                    const bandwidth = hls.bandwidthEstimate/1000;
+                    setBandwidthValues(prevValues => [...prevValues, bandwidth]);
+
+                    // TTFB
+                    const ttfb = hls.ttfbEstimate.toFixed(3);
+                    setTTFBValues(prevValues => [...prevValues, ttfb]);
+
+                    // mtp
                     const mtpValue = parseManifestURL(frag.baseurl);
                     setMtps(prevMtps => [...prevMtps, mtpValue]);
 
@@ -77,22 +91,25 @@ const AudioPlayer = ({ src }) => {
     }, [src]);
 
     return (
-        <div style={{ maxWidth: '100%', margin: '0 auto' }}>
+        <div style={{ maxWidth: '50%', margin: '0 auto' }}>
             <audio ref={audioRef} controls style={{ marginBottom: '20px' }}></audio>
             <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>Manifest URL: {url}</h3>
-                <div style={{ display: 'flex', marginRight: '10px' , justifyContent: 'center'}}>
-                    <BitrateChart bitrates={bitrates} />
+                <div style={{ display: 'flex', marginLeft: '10px', justifyContent: 'center' }}>
+                    <TPandBRChart bitrates={bitrates} topBandwidths={topBandwidths} />
                 </div>
-                <div style={{ display: 'flex', marginLeft: '10px', justifyContent: 'center'}}>
-                    <TopBandwidthChart topBandwidths={topBandwidths} />
+                <div style={{ display: 'flex', marginRight: '10px', justifyContent: 'center' }}>
+                    <MtpChart mtps={mtps} />
                 </div>
-
-
-                <div style={{ display: 'flex', marginRight: '10px', justifyContent: 'center' }}>                    <MtpChart mtps={mtps} />
+                <div style={{ display: 'flex', marginLeft: '10px', justifyContent: 'center' }}>
+                    <BandwidthChart bandwidthValues={bandwidthValues} />
+                </div>
+                <div style={{ display: 'flex', marginLeft: '10px', justifyContent: 'center' }}>
+                    <TTFBChart ttfbValues={ttfbValues} />
                 </div>
                 <div style={{ display: 'flex', marginLeft: '10px', justifyContent: 'center' }}>
                     <BufferStallChart bufferStalls={bufferStalls} />
                 </div>
+                
         </div>
     );
 };

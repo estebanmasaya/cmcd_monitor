@@ -22,7 +22,7 @@ const MtpChart = ({ mtps }) => {
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true,
+                        beginAtZero: false,
                     },
                 },
                 responsive: true,

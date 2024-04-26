@@ -1,8 +1,7 @@
-// TopBandwidthChart.js
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-const TopBandwidthChart = ({ topBandwidths }) => {
+const TTFBChart = ({ ttfbValues }) => {
     const chartRef = useRef(null);
 
     useEffect(() => {
@@ -11,12 +10,12 @@ const TopBandwidthChart = ({ topBandwidths }) => {
         const chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: topBandwidths.map((_, index) => index + 1),
+                labels: ttfbValues.map((_, index) => index + 1),
                 datasets: [{
-                    label: 'Top Bandwidth (tp)',
-                    data: topBandwidths,
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    label: 'Time to First Byte (ms)',
+                    data: ttfbValues,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 }],
             },
             options: {
@@ -34,11 +33,11 @@ const TopBandwidthChart = ({ topBandwidths }) => {
             // Cleanup chart
             chart.destroy();
         };
-    }, [topBandwidths]);
+    }, [ttfbValues]);
 
     return (
-        <canvas ref={chartRef} style={{ maxWidth: '80%', height: '400px'}}></canvas>
+        <canvas ref={chartRef} style={{ maxWidth: '75%', height: '400px' }}></canvas>
     );
 };
 
-export default TopBandwidthChart;
+export default TTFBChart;

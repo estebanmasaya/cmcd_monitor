@@ -1,44 +1,44 @@
-// BitrateChart.js
-import React, { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
+    // BitrateChart.js
+    import React, { useEffect, useRef } from 'react';
+    import Chart from 'chart.js/auto';
 
-const BitrateChart = ({ bitrates }) => {
-    const chartRef = useRef(null);
+    const BitrateChart = ({ bitrates }) => {
+        const chartRef = useRef(null);
 
-    useEffect(() => {
-        // Initialize chart
-        const ctx = chartRef.current.getContext('2d');
-        const chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: bitrates.map((_, index) => index + 1),
-                datasets: [{
-                    label: 'Bitrate (br)',
-                    data: bitrates,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                }],
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
+        useEffect(() => {
+            // Initialize chart
+            const ctx = chartRef.current.getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: bitrates.map((_, index) => index + 1),
+                    datasets: [{
+                        label: 'Bitrate (br)',
+                        data: bitrates,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    }],
                 },
-                responsive: true,
-                maintainAspectRatio: false,
-            },
-        });
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                        },
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                },
+            });
 
-        return () => {
-            // Cleanup chart
-            chart.destroy();
-        };
-    }, [bitrates]);
+            return () => {
+                // Cleanup chart
+                chart.destroy();
+            };
+        }, [bitrates]);
 
-    return (
-        <canvas ref={chartRef} style={{ maxWidth: '75%', height: '400px' }}></canvas>
-    );
-};
+        return (
+            <canvas ref={chartRef} style={{ maxWidth: '75%', height: '400px' }}></canvas>
+        );
+    };
 
-export default BitrateChart;
+    export default BitrateChart;

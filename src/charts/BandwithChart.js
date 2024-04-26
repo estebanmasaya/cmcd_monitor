@@ -1,8 +1,7 @@
-// TopBandwidthChart.js
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-const TopBandwidthChart = ({ topBandwidths }) => {
+const BandwidthChart = ({ bandwidthValues }) => {
     const chartRef = useRef(null);
 
     useEffect(() => {
@@ -11,10 +10,10 @@ const TopBandwidthChart = ({ topBandwidths }) => {
         const chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: topBandwidths.map((_, index) => index + 1),
+                labels: bandwidthValues.map((_, index) => index + 1),
                 datasets: [{
-                    label: 'Top Bandwidth (tp)',
-                    data: topBandwidths,
+                    label: 'Bandwidth (kbps)',
+                    data: bandwidthValues,
                     borderColor: 'rgba(54, 162, 235, 1)',
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 }],
@@ -34,11 +33,11 @@ const TopBandwidthChart = ({ topBandwidths }) => {
             // Cleanup chart
             chart.destroy();
         };
-    }, [topBandwidths]);
+    }, [bandwidthValues]);
 
     return (
-        <canvas ref={chartRef} style={{ maxWidth: '80%', height: '400px'}}></canvas>
+        <canvas ref={chartRef} style={{ maxWidth: '75%', height: '400px' }}></canvas>
     );
 };
 
-export default TopBandwidthChart;
+export default BandwidthChart;
