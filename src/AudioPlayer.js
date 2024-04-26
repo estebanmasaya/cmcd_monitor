@@ -48,7 +48,7 @@ const AudioPlayer = ({ src }) => {
 
                     // Set manifest URL
                     setUrl(frag.baseurl);
-
+                    console.log("TTFB: " + hls.ttfbEstimate.toFixed(3))
                     // Parse manifest URL to extract MTP
                     const mtpValue = parseManifestURL(frag.baseurl);
                     setMtps(prevMtps => [...prevMtps, mtpValue]);
