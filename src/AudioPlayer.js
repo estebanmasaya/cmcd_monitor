@@ -49,6 +49,8 @@ const AudioPlayer = ({ src }) => {
                     // Set manifest URL
                     setUrl(frag.baseurl);
                     console.log("TTFB: " + hls.ttfbEstimate.toFixed(3))
+                    console.log("BANDWIDTH: " + hls.bandwidthEstimate)
+
                     // Parse manifest URL to extract MTP
                     const mtpValue = parseManifestURL(frag.baseurl);
                     setMtps(prevMtps => [...prevMtps, mtpValue]);
@@ -75,25 +77,22 @@ const AudioPlayer = ({ src }) => {
     }, [src]);
 
     return (
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '100%', margin: '0 auto' }}>
             <audio ref={audioRef} controls style={{ marginBottom: '20px' }}></audio>
             <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>Manifest URL: {url}</h3>
-            <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '40px' }}>
-                <div style={{ flex: '1', marginRight: '10px' }}>
+                <div style={{ display: 'flex', marginRight: '10px' , justifyContent: 'center'}}>
                     <BitrateChart bitrates={bitrates} />
                 </div>
-                <div style={{ flex: '1', marginLeft: '10px' }}>
+                <div style={{ display: 'flex', marginLeft: '10px', justifyContent: 'center'}}>
                     <TopBandwidthChart topBandwidths={topBandwidths} />
                 </div>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                <div style={{ flex: '1', marginRight: '10px' }}>
-                    <MtpChart mtps={mtps} />
+
+
+                <div style={{ display: 'flex', marginRight: '10px', justifyContent: 'center' }}>                    <MtpChart mtps={mtps} />
                 </div>
-                <div style={{ flex: '1', marginLeft: '10px' }}>
+                <div style={{ display: 'flex', marginLeft: '10px', justifyContent: 'center' }}>
                     <BufferStallChart bufferStalls={bufferStalls} />
                 </div>
-            </div>
         </div>
     );
 };

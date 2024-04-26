@@ -37,7 +37,7 @@ const BitrateChart = ({ bitrates }) => {
     }, [bitrates]);
 
     return (
-        <canvas ref={chartRef} style={{ maxWidth: '600px', maxHeight: '400px' }}></canvas>
+        <canvas ref={chartRef} style={{ maxWidth: '75%', height: '400px' }}></canvas>
     );
 };
 
