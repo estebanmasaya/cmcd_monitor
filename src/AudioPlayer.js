@@ -57,7 +57,7 @@ const AudioPlayer = ({ src }) => {
                     console.log("TTFB: " + hls.ttfbEstimate.toFixed(3))
                     console.log("BANDWIDTH E: " + hls.bandwidthEstimate)
 
-                    // Bandwith v
+                    // Bandwith
                     const bandwidth = hls.bandwidthEstimate/1000;
                     setBandwidthValues(prevValues => [...prevValues, bandwidth]);
 
