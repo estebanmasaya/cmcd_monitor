@@ -55,7 +55,7 @@ const AudioPlayer = ({ src }) => {
                     // Set manifest URL
                     setUrl(frag.baseurl);
                     console.log("TTFB: " + hls.ttfbEstimate.toFixed(3))
-                    console.log("BANDWIDTH: " + hls.bandwidthEstimate)
+                    console.log("BANDWIDTH E: " + hls.bandwidthEstimate)
 
                     // Bandwith
                     const bandwidth = hls.bandwidthEstimate/1000;
