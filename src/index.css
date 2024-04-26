@@ -5,6 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  background-color: hwb(0 100% 0% / 0.783); /* Set your desired background color */
+  
+  
 }
 
 code {
