@@ -28,7 +28,7 @@ for key, value in routers_data.items():
 
 plt.xlabel('ICMP_seq', fontsize=24)
 plt.ylabel('Round Trip Time (ms)', fontsize=24)
-plt.title('Data for Routers', fontsize=16)
+plt.title('Round Trip Times', fontsize=16)
 # Rotate x-axis labels
 plt.xticks(rotation=45, ha='right')
 plt.legend(fontsize=12)
@@ -40,8 +40,8 @@ variances = {key: np.var(value) for key, value in routers_data.items()}
 # Plotting the variances
 plt.figure(figsize=(10, 6))
 plt.bar(variances.keys(), variances.values())
-plt.xlabel('Router', fontsize=14)
-plt.ylabel('Variance', fontsize=14)
+plt.xlabel('Router', fontsize=24)
+plt.ylabel('Variance', fontsize=24)
 plt.title('Variance of Router Data', fontsize=16)
 plt.xticks(fontsize=12)
 plt.yticks(fontsize=12)
@@ -53,8 +53,8 @@ std_devs = {key: np.std(value) for key, value in routers_data.items()}
 # Plotting the standard deviations
 plt.figure(figsize=(10, 6))
 plt.bar(std_devs.keys(), std_devs.values(), color='red', label='Standard Deviation')
-plt.xlabel('Router', fontsize=14)
-plt.ylabel('Standard Deviation', fontsize=14)
+plt.xlabel('Router', fontsize=24)
+plt.ylabel('Standard Deviation', fontsize=24)
 plt.title('Standard Deviation of Router Data', fontsize=16)
 plt.xticks(fontsize=12)
 plt.yticks(fontsize=12)
