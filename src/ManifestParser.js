@@ -6,7 +6,7 @@ const parseManifestURL = (manifestURL) => {
     const cmcdParam = decodeURIComponent(urlParams.get('CMCD'));
     const mtpMatch = cmcdParam.match(/mtp=(\d+)/);
     const mtp = mtpMatch ? parseInt(mtpMatch[1]) : null;
-    console.log('Parsed MTP:', mtp);
+    //console.log('Parsed MTP:', mtp);
     return mtp;
 };
 

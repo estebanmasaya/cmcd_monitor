@@ -8,7 +8,7 @@ import BufferStallChart from './charts/BufferStallChart';
 import TTFBChart from './charts/TTFBChart';
 import { v4 as uuidv4 } from 'uuid';
 import BandwidthChart from './charts/BandwithChart';
-import TPandBRChart from './charts/TPandBRChart'
+import TPandBRChart from './charts/TPandBRChart';
 
 
 const AudioPlayer = ({ src }) => {
@@ -44,6 +44,8 @@ const AudioPlayer = ({ src }) => {
                 hls.on(Hls.Events.ERROR, function (event, data) {
                     if (data.details === Hls.ErrorDetails.BUFFER_STALLED_ERROR) {
                         const stallTime = new Date().getTime();
+                        const now = new Date();
+                        console.log(`Stall Time is: ${now.toLocaleTimeString('en-US', { hour12: false })}.${now.getMilliseconds()}}`)
                         setBufferStalls(prevStalls => [...prevStalls, stallTime]);
                     }
                 });
@@ -54,8 +56,8 @@ const AudioPlayer = ({ src }) => {
 
                     // Set manifest URL
                     setUrl(frag.baseurl);
-                    console.log("TTFB: " + hls.ttfbEstimate.toFixed(3))
-                    console.log("BANDWIDTH E: " + hls.bandwidthEstimate)
+                    //console.log("TTFB: " + hls.ttfbEstimate.toFixed(3))
+                    //console.log("BANDWIDTH E: " + hls.bandwidthEstimate)
 
                     // Bandwith b
                     const bandwidth = hls.bandwidthEstimate/1000;
