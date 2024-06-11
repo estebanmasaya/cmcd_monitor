@@ -12,12 +12,14 @@ function App() {
   return (
     <div className="App">
       <h1 className="title">Sveriges Radio</h1>
+        <h2>QoE Monitor</h2>
       <div className="channel-input-container">
         <label htmlFor="channelInput" className="channel-label">Enter Channel URL:</label>
         <input
           id="channelInput"
           type="text"
           value={channelUrl}
+          onChange={handleInputChange}
           onChange={handleInputChange}
           className="channel-input"
           placeholder="Enter channel URL..."

@@ -93,9 +93,9 @@ const AudioPlayer = ({ src }) => {
     }, [src]);
 
     return (
-        <div style={{ maxWidth: '50%', margin: '0 auto' }}>
+        <div style={{ maxWidth: '60%', margin: '0 auto' }}>
             <audio ref={audioRef} controls style={{ marginBottom: '20px' }}></audio>
-            <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>Manifest URL: {url}</h3>
+            {/*<h3 style={{ textAlign: 'center', marginBottom: '20px' }}>Manifest URL: {url}</h3>*/}
                 <div style={{ display: 'flex', marginLeft: '10px', justifyContent: 'center' }}>
                     <TPandBRChart bitrates={bitrates} topBandwidths={topBandwidths} />
                 </div>
