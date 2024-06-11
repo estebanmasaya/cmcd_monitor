@@ -5,7 +5,7 @@ side with help of the media player and plot them in different graphs. This proto
 was then used to execute tests with the goal to get a better understanding on how
 different network situations can affect the QoE of the live radio broadcast.
 
-![Example Image](Qoe Monitor.png)
+![Example Image](QoeMonitor.png)
 
 
 ## Implementation
